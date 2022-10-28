@@ -1,14 +1,16 @@
 package main
+
 import {
 
 }
 
+
 // Creating an interface
 type vehicle interface {
 
-	// Methods
+	/* // Methods
 	fun1() int
-	fun2() float64
+	fun2() float64 */
 }
 
 type car struct {
