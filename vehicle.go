@@ -6,6 +6,9 @@ import (
 	"log"
 	"os"
 	"strings"
+
+	"github.com/prometheus/common/model"
+	"github.com/zclconf/go-cty/cty/function"
 )
 
 // Creating an interface
@@ -142,5 +145,13 @@ func generateRating() {
 			}
 		}
 		vehResult = vehicleResult[v.Name]
+	}
+}
+
+func showRating(model) string {
+	
+	var ratingFound bool = false
+	for _, m, r := range vehicleResult {
+		
 	}
 }
