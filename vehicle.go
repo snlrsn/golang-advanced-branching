@@ -2,13 +2,11 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"log"
 	"os"
 	"strings"
-
-	"github.com/prometheus/common/model"
-	"github.com/zclconf/go-cty/cty/function"
 )
 
 // Creating an interface
@@ -89,24 +87,21 @@ func init() {
 func main() {
 
 	// Generate ratings for the different vehicles
-	return generateRating()
+	generateRating()
 	// Print ratings for the different vehicles
 }
 
 func readJSONFile() Values {
 
 	jsonFile, err := os.Open("feedback.json")
-
 	if err != nil {
 		log.Fatal("File not found")
 	}
 
 	defer jsonFile.Close()
-
 	byteValue, _ := ioutil.ReadAll(jsonFile)
 	var content Values
 	json.Unmarshal(byteValue, &content)
-
 	return content
 
 }
@@ -114,7 +109,7 @@ func readJSONFile() Values {
 func generateRating() {
 
 	f := readJSONFile()
-	return f()
+	return f
 	for _, v := range f.Models {
 		var vehResult feedbackResult
 		var vehRating rating
@@ -144,14 +139,21 @@ func generateRating() {
 				}
 			}
 		}
-		vehResult = vehicleResult[v.Name]
+		vehicleResult[v.Name] = vehResult
 	}
 }
 
 func showRating(model) string {
-	
-	var ratingFound bool = false
-	for _, m, r := range vehicleResult {
-		
+
+	var ratingFound = false
+	for m, r := range vehicleResult {
+		if m == model {
+			fmt.Printf("Total Ratings:%v\tPositive:%v\tNegative:%v\tNeutral:%v", r.feedbackTotal, r.feedbackPositive, r.feedbackNegative, r.feedbackNeutral)
+			ratingFound = true
+		}
 	}
+	if !ratingFound {
+		fmt.Printf("No rating for this vehicle")
+	}
+	return model
 }
