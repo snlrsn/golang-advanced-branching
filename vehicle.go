@@ -86,7 +86,7 @@ func init() {
 func main() {
 
 	// Generate ratings for the different vehicles
-
+	return generateRating()
 	// Print ratings for the different vehicles
 }
 
@@ -111,7 +111,7 @@ func readJSONFile() Values {
 func generateRating() {
 
 	f := readJSONFile()
-	return f
+	return f()
 	for _, v := range f.Models {
 		var vehResult feedbackResult
 		var vehRating rating
